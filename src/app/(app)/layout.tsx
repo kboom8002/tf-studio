@@ -1,6 +1,21 @@
 import Link from 'next/link'
+import { createClient } from '@/utils/supabase/server'
+import { signOutUser } from '@/app/actions/auth'
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  let roleBadge = null
+  if (user) {
+    const { data: member } = await supabase
+      .from('workspace_members')
+      .select('role')
+      .eq('user_id', user.id)
+      .single()
+    roleBadge = member?.role
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Global Navigation Header */}
@@ -18,12 +33,27 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </nav>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="text-sm bg-gray-100 px-3 py-1 rounded-full font-medium text-gray-800">
-              Workspace Admin
-            </div>
-            <button className="bg-black text-white px-4 py-2 rounded-md text-sm font-semibold">
-              Sign Out
-            </button>
+            {!user ? (
+              <Link href="/login" className="bg-black text-white px-4 py-2 rounded-md text-sm font-semibold">
+                Sign In
+              </Link>
+            ) : (
+              <>
+                <div className="flex flex-col text-right mr-2 hidden sm:block">
+                  <span className="text-xs font-semibold text-gray-900 block">{user.email}</span>
+                </div>
+                {roleBadge && (
+                  <div className="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold">
+                    {roleBadge.toUpperCase()}
+                  </div>
+                )}
+                <form action={signOutUser} className="inline-block">
+                  <button type="submit" className="border border-slate-300 text-slate-700 hover:bg-slate-100 px-4 py-2 rounded-md text-sm font-semibold transition-colors">
+                    Sign Out
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </header>
