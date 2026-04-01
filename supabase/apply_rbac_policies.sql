@@ -58,3 +58,15 @@ WITH CHECK (
     SELECT workspace_id FROM workspace_members WHERE user_id = auth.uid()
   )
 );
+
+-- 4. Workspace Members (멤버십) 보안 정책
+-- 가입 시 자신의 멤버십 레코드를 조회/추가할 수 있도록 허가
+CREATE POLICY "user_can_read_own_membership" ON "public"."workspace_members"
+AS PERMISSIVE FOR SELECT
+TO authenticated
+USING (user_id = auth.uid());
+
+CREATE POLICY "user_can_join_workspace" ON "public"."workspace_members"
+AS PERMISSIVE FOR INSERT
+TO authenticated
+WITH CHECK (user_id = auth.uid());
