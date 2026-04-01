@@ -7,6 +7,7 @@ import { FLOWStep } from './steps/flow-step'
 import { DraftStep } from './steps/draft-step'
 import { ReviewStep } from './steps/review-step'
 import { PublishStep } from './steps/publish-step'
+import { useEffect, useRef } from 'react'
 
 const stepsComponents = [
   <TASStep key="tas" />,
@@ -19,15 +20,35 @@ const stepsComponents = [
 
 const stepLabels = ['1. 과업설정 (T/A/S)', '2. K블록', '3. 형식지정 (F/L/O/W)', '4. 초안생성', '5. 리뷰/수정', '6. 자산화']
 
-export function WizardContainer({ studioName, studioType }: { studioName: string, studioType: string }) {
-  const { currentStepIndex, prevStep, nextStep, steps } = useWizardStore()
+interface WizardContainerProps {
+  studioName: string
+  studioType: string
+  initialTemplateId?: string
+  initialInputs?: Record<string, any>
+  initialTemplateName?: string
+}
+
+export function WizardContainer({ studioName, studioType, initialTemplateId, initialInputs, initialTemplateName }: WizardContainerProps) {
+  const { currentStepIndex, prevStep, nextStep, steps, initFromTemplate } = useWizardStore()
+  const initRef = useRef(false)
+
+  useEffect(() => {
+    if (initialTemplateId && initialInputs && !initRef.current) {
+      initFromTemplate(initialTemplateId, initialInputs)
+      initRef.current = true
+    }
+  }, [initialTemplateId, initialInputs, initFromTemplate])
 
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto py-8">
       {/* Studio Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold">{studioName}</h1>
-        <p className="text-gray-500 mt-2">TASKFLOW 6단계 마법사를 통해 작성됩니다.</p>
+        {initialTemplateName ? (
+           <p className="text-blue-600 font-semibold mt-2">✨ '{initialTemplateName}' 템플릿을 기반으로 작성 시작</p>
+        ) : (
+           <p className="text-gray-500 mt-2">TASKFLOW 6단계 마법사를 통해 작성됩니다.</p>
+        )}
       </div>
 
       {/* ProgressBar Area */}

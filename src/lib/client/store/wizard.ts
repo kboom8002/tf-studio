@@ -23,6 +23,7 @@ interface WizardState {
   reviewFeedback: string | null
   
   // Actions
+  initFromTemplate: (templateId: string, initialInputs: Record<string, any>) => void
   setSessionId: (id: string) => void
   nextStep: () => void
   prevStep: () => void
@@ -41,6 +42,12 @@ export const useWizardStore = create<WizardState>((set) => ({
   sessionId: null,
   draftOutput: null,
   reviewFeedback: null,
+
+  initFromTemplate: (templateId, initialInputs) => set({
+    inputs: initialInputs, // Override inputs
+    // Do NOT set sessionId here, because this is a NEW session cloned from the template
+    // Optionally we can store a clonedTemplateId reference if needed, but for MVP it just pre-fills the form
+  }),
 
   setSessionId: (id) => set({ sessionId: id }),
 

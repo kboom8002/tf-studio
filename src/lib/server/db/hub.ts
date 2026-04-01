@@ -48,3 +48,16 @@ export async function getHubTemplates(workspaceId: string, studioType?: StudioTy
   if (error) throw new Error(`Hub 데이터 로드 실패: \${error.message}`)
   return data
 }
+
+export async function getTemplateById(templateId: string) {
+  const supabase = await createClient()
+  
+  const { data, error } = await supabase
+    .from('templates')
+    .select('*')
+    .eq('id', templateId)
+    .single()
+
+  if (error) throw new Error(`템플릿 조회 실패: \${error.message}`)
+  return data
+}
