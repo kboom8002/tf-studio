@@ -1,0 +1,17 @@
+---
+description: "RBAC, approval, SSoT governance를 보호하는 규칙"
+globs: ["app/**", "lib/**", "supabase/**", "db/**"]
+---
+
+이 프로젝트는 role, approval, certification이 핵심인 governance SaaS다.
+
+반드시 지킬 것:
+- membership 기반 role 해석
+- organization/workspace scope 유지
+- SSoT는 approval workflow를 거치게 할 것
+- certification / approval / revoke / promote / deprecate는 audit trail을 남길 것
+
+금지:
+- author가 직접 certified_ssot 상태를 만들게 하는 우회 구현
+- role이나 approval을 UI 조건문만으로 처리하는 것
+- audit 없이 high-risk mutation을 추가하는 것

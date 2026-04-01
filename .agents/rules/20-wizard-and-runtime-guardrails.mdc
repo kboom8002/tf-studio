@@ -1,0 +1,18 @@
+---
+description: "6단계 Wizard와 런타임 핵심 불변조건을 보호하는 규칙"
+globs: ["app/**", "components/**", "lib/**"]
+---
+
+TASKFLOW의 핵심 작성 표면은 자유 텍스트 창이 아니라 6단계 Wizard다.
+
+반드시 지킬 것:
+- step validation 없이 다음 단계로 넘기지 않는다
+- blocker와 next action을 숨기지 않는다
+- main run과 review run을 분리한다
+- unresolved PII가 있으면 generation을 차단한다
+- review critical issue가 있으면 publish/save 흐름에 반영한다
+
+금지:
+- Wizard를 단순한 long form으로 퇴화시키는 것
+- sanitization gate를 우회하는 것
+- review run을 생략하거나 장식적 기능처럼 취급하는 것

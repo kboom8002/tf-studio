@@ -1,0 +1,21 @@
+---
+description: "TASKFLOW 저장소에서 작업 시작 전 반드시 /docs 정본을 먼저 읽게 하는 규칙"
+alwaysApply: true
+---
+
+이 저장소에서는 코드를 먼저 수정하지 말고, 먼저 /docs를 읽는다.
+
+최소 필수 문서:
+- /docs/00-start-here/AGENT-ENTRYPOINT.md
+- /docs/00-start-here/DOCUMENT-MAP.md
+- /docs/00-start-here/READING-ORDER.md
+- /docs/00-start-here/GLOSSARY.md
+- /docs/10-product/00-product-brief.md
+
+작업 시작 전 반드시 정리할 것:
+- 이번 작업이 Core OS / Studio App / Governance 중 어디에 속하는지
+- source of truth 문서가 무엇인지
+- TF8 schema, constants/variables, sanitization, review run, SSoT governance에 영향이 있는지
+
+금지:
+- 문서를 읽지 않고 schema, status, role, studioType, approval flow를 추정하지 않는다.

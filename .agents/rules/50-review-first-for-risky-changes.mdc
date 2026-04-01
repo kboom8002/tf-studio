@@ -1,0 +1,23 @@
+---
+description: "고위험 변경은 바로 구현하지 않고 먼저 계획과 영향 범위를 정리하게 하는 규칙"
+alwaysApply: true
+---
+
+다음 변경은 고위험으로 본다.
+
+- TF8 schema 변경
+- session/template status enum 변경
+- constants/variables 병합 방식 변경
+- sanitization gate 변경
+- review run contract 변경
+- SSoT approval / certification flow 변경
+- role / RLS / signed URL / retention policy 변경
+
+이 경우 먼저 아래를 정리한다.
+- 어떤 문서를 읽었는지
+- 바뀌는 정책/경계
+- 영향받는 레이어
+- rollback 포인트
+- 테스트 포인트
+
+고위험 변경에서는 “먼저 계획, 그 다음 구현” 원칙을 따른다.

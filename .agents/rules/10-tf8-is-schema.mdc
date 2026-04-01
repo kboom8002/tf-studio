@@ -1,0 +1,17 @@
+---
+description: "TF8을 문자열이 아니라 기계적 스키마로 취급하게 하는 규칙"
+alwaysApply: true
+---
+
+TASKFLOW에서 TF8은 문자열 템플릿이 아니라 시스템 전반의 데이터 스키마다.
+
+반드시 지킬 것:
+- TF8 block set을 문자열 덩어리처럼 다루지 않는다
+- Template, VariableSlot, WizardSession, PromptAssembly는 schema-first로 다룬다
+- structured output contract를 우선한다
+- studio output schema를 문서 없이 임의 변경하지 않는다
+
+금지:
+- TF8 block 의미를 임의로 바꾸는 것
+- constants/variables 분리를 약화시키는 것
+- final merge를 클라이언트에서 수행하는 설계

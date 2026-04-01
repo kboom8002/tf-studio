@@ -1,0 +1,16 @@
+---
+description: "Core OS와 Studio App 경계를 유지하게 하는 규칙"
+globs: ["app/**", "components/**", "lib/**"]
+---
+
+Press Release, Meeting Minutes, Announcement Email은 서로 다른 Studio App이지만,
+TF8 schema, Wizard shell, Prompt Assembly, Sanitization, Review, Hub, Governance는 공통 Core OS를 사용한다.
+
+반드시 지킬 것:
+- 공통 Core OS 로직과 studio-specific 로직을 분리한다
+- studioType별 input/output schema와 rubric 차이를 유지한다
+- 공통 컴포넌트를 studio 전용 하드코딩으로 오염시키지 않는다
+
+금지:
+- 특정 Studio 구현을 Core OS 전체처럼 박아 넣는 것
+- studio-specific rule을 공통 rule로 착각해 확산시키는 것
