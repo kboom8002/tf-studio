@@ -44,7 +44,7 @@ export default async function PromptHubPage() {
                 <h2 className="text-lg font-bold">{template.title}</h2>
               </div>
               <Link 
-                href={`/studio/\${template.studio_type}?templateId=\${template.id}`}
+                href={`/studio/${template.studio_type}?templateId=${template.id}`}
                 className="text-center w-full py-2 bg-gray-100 hover:bg-gray-200 text-sm font-semibold rounded-md"
               >
                 이 템플릿으로 작성 시작
